@@ -58,6 +58,9 @@ export default function Site() {
     if (filterStatus == "active") return !todo.isDone;
     return todo.isDone;
   });
+  const completedTodo = todos.filter((el) => {
+    if (el.isDone == true) return el;
+  });
 
   return (
     <div className="flex justify-center rounded-md pt-[60px] w-screen h-screen bg-[#F3F4F6]">
@@ -125,7 +128,10 @@ export default function Site() {
             No tasks yet. Add one above!
           </h6>
         ) : (
-          <h3 onClick={deleteOnAll} className="text-red-500 mt-6 ">
+          <h3 onClick={deleteOnAll} className="text-red-500 mt-6 flex gap-30">
+            <h4 className="text-gray-500">
+              {completedTodo.length} of {todos.length}
+            </h4>
             Clear Completed
           </h3>
         )}
