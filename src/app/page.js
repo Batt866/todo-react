@@ -61,7 +61,7 @@ export default function Site() {
 
   return (
     <div className="flex justify-center rounded-md pt-[60px] w-screen h-screen bg-[#F3F4F6]">
-      <div className=" h-fit w-60 bg-white flex flex-col justify-center items-center rounded-md p-[16px] inset-shadow-sm inset-shadow-gray-500 ">
+      <div className=" h-fit w-90 bg-white flex flex-col justify-center items-center rounded-md p-[16px] inset-shadow-sm inset-shadow-gray-500 ">
         <h1 className="text-black text-center font-semibold">To-Do list</h1>
         <div className="flex gap-1.5">
           <input
