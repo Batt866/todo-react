@@ -3,20 +3,23 @@
 import { Web } from "@/components/web";
 import { Check } from "@/components/buttoncheck";
 import { useState } from "react";
-import { Hahmlet } from "next/font/google";
+
 import { v4 as uuidv4 } from "uuid";
 
 export default function Site() {
   const [todos, setTodos] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [newArr, setNewArr] = useState([]);
 
   const handleOnChange = (event) => {
     setInputValue(event.target.value);
   };
 
   const handleOnClick = () => {
-    setTodos([...todos, { title: inputValue, isDone: false, id: uuidv4() }]);
-    setInputValue("");
+    if (!inputValue == "") {
+      setTodos([...todos, { title: inputValue, isDone: false, id: uuidv4() }]);
+      setInputValue("");
+    }
   };
   const handleOnChangeChecked = (event, id) => {
     const newTodos = todos.map((el, i) => {
@@ -25,6 +28,10 @@ export default function Site() {
     });
 
     setTodos(newTodos);
+  };
+  const deleteOnAll = () => {
+    const filtered = todos.filter((todo) => !todo.isDone);
+    setTodos(filtered);
   };
 
   const task = {
@@ -36,12 +43,11 @@ export default function Site() {
     isChecked: true,
   };
   const deleteOnChange = (index) => {
-    console.log(index, "index");
     const newTodos = todos.filter((el, i) => i !== index);
 
     setTodos(newTodos);
   };
-  const [filterStatus, setFilterStatus] = useState("active");
+  const [filterStatus, setFilterStatus] = useState("all");
 
   const handleFilterStatus = (status) => {
     console.log("hha");
@@ -63,6 +69,7 @@ export default function Site() {
             placeholder={"Add a new task..."}
             className="border-[#E4E4E7] border rounded-md text-black"
             onChange={(event) => handleOnChange(event)}
+            value={inputValue}
           ></input>
           <button
             onClick={handleOnClick}
@@ -71,7 +78,6 @@ export default function Site() {
             Add
           </button>
         </div>
-
         <div className="flex gap-2 mt-[20px]">
           <Web
             button="All"
@@ -99,9 +105,6 @@ export default function Site() {
           ></Web>
         </div>
 
-        <h6 className="font-normal text-center text-[#6B7280] text-sm mt-[32px]">
-          No tasks yet. Add one above!
-        </h6>
         <div>
           {filteredTodos.map((todo, index) => {
             return (
@@ -118,6 +121,15 @@ export default function Site() {
             );
           })}
         </div>
+        {todos.length < 1 ? (
+          <h6 className="font-normal text-center text-[#6B7280] text-sm mt-[32px]">
+            No tasks yet. Add one above!
+          </h6>
+        ) : (
+          <h3 onClick={deleteOnAll} className="text-red-500 mt-6 ">
+            Clear Completed
+          </h3>
+        )}
         <div className="flex mt-[40px]">
           <h6 className="text-[#6B7280] text-xs font-normal flex justify-center ">
             Powered by
